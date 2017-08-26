@@ -15,8 +15,11 @@ def compute_action(state):
     y_err = y_ref - y_angle
     with open("k_value.txt", "r") as txt:
         x_KP = float(txt.readline())
-    # action["motor1"] = x_err
-    action["motor1"] = -1.0*state[6]/500.0 + x_KP*x_err
+    action["motor1"] = x_KP * x_err
+    # action["motor1"] = 1.0\
+    # action["motor1"] = (state[6]/1000.0 + x_KP*x_err)
+    # action["motor1"] = 0.2
+
     # print x_KP
     # if np.abs(action["motor1"]) <  0.001:
     #   action["motor1"] = 0.0
@@ -57,7 +60,8 @@ def main():
             formatted_state = [ '%.2f' % elem for elem in state ]
 
             print "state, action, ref, k: ", formatted_state, action, [x_err, y_err]
-            data_to_plot = [x_err, action['motor1'], state[6]/200.0]
+            # data_to_plot = [x_err*2.5, action['motor1'], state[6]/500.0]
+            data_to_plot = [x_err, action['motor1'], state[6]/500.0]
             # print "action: ", action
         else:
             data_to_plot = [0.0, 0.0, 0.0]
